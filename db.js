@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 //connectURL
 
-const mongourl = 'mongodb://localhost:27017/hotels';
+//const mongourl = 'mongodb://localhost:27017/hotels';
+const mongourl = 'mongodb+srv://sourabhbatra403:(shivani)@cluster0.luo2c.mongodb.net/'
 
 
 //establish commection

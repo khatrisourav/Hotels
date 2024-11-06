@@ -6,13 +6,15 @@ const person = require("./models/person");
 const bodyparser= require("body-parser");
 
 const regist = require ("./models/registration")
+require('dotenv').config();
+
 
 app.use(bodyparser.json());
 
 
+const PORT = process.env.PORT ||3000
 
-
-app.listen(3000, () => {
+app.listen(PORT, () => {
 console.log("server is running");
 });
 console.log("start");
