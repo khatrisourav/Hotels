@@ -8,9 +8,13 @@ const bodyparser= require("body-parser");
 const regist = require ("./models/registration")
 require('dotenv').config();
 
+const logrequest = (req,res,next)=>{
+console.log(`[${new Date().toLocaleDateString()}] request made to :-${req.originalUrl}`);
+next();
 
+}
 app.use(bodyparser.json());
-
+app.use(logrequest);
 
 const PORT = process.env.PORT ||3000
 
