@@ -11,11 +11,12 @@ const mongourl = 'mongodb://localhost:27017/hotels';
 
 //establish commection
 
-mongoose.connect(mongourl , {
+// mongoose.connect(mongourl , {
 
    
    
-})
+// })
+mongoose.connect(mongourl);
 
 //obbject for responsible for connnection 
 
