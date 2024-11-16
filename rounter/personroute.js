@@ -1,10 +1,13 @@
+
+41
 const express  = require ("express");
 
 const router =  express.Router();
 
-const person = require("../models/person")
+const person = require("../models/person");
+const { generatetoken,jsonauthmiddleware } = require("./../jsonauth");
 
-router.post ('/', async (req , res )=>{
+router.post ('/signup', async (req , res )=>{
 
     try {
 
@@ -15,9 +18,18 @@ router.post ('/', async (req , res )=>{
 
         const savedperson=   await newperson.save();
 
+
         console.log("data saved");
 
-        res.status(200).json(savedperson);
+
+        const payload={
+            id: savedperson.id,
+            username: savedperson.username,
+        }
+
+        const token = generatetoken(payload);
+
+        res.status(200).json({savedperson:savedperson,token:token});
 
 
     }
@@ -28,7 +40,55 @@ router.post ('/', async (req , res )=>{
     }
 })
 
-router.get('/', async (req, res )=>{
+
+router.post('/login', async(req,res)=>{
+
+try {
+
+    const { username, password} = req.body;
+
+    const user = await person.findOne({username: username});
+
+
+    if (!user || !(await user.comparepassword(password))){
+        return res.status(401).json({error: "shi kar code bhai login route ko  password or username galat hai "});
+    }
+
+    const payload = {
+
+        id : req.id,
+        username: req.username
+    }
+
+    const token = generatetoken(payload);
+
+    res.status(201).json(token);
+
+}
+catch(err){
+console.log(err);
+res.status(500).json({error: "kar abb agya error catch block me "})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+})
+
+router.get('/signup', async (req, res )=>{
 
     try {
 
@@ -118,6 +178,3 @@ router.delete('/:id', async (req,res)=>{
 })
 
 module.exports= router;
-
-
-

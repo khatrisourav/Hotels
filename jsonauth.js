@@ -1,0 +1,46 @@
+const jwt = require('jsonwebtoken');  // Correct the typo
+
+require('dotenv').config();
+
+
+const jsonauthmiddleware = (req,res,next) =>{
+
+    const token = req.headers.authorization.split(' ')[1];
+
+
+
+    if(!token)  return res.status(401).json({invalid : 'unauthorized access'});
+
+
+    try {
+
+        //verify the token
+
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+
+        req.user= decoded,
+
+        next();
+
+
+    }
+
+    catch (err ){
+
+ res.status(500).json({error: 'token not found'});
+    }
+
+
+
+}
+
+const generatetoken =  (userData)=>{
+
+return jwt.sign(userData, process.env.JWT_SECRET);
+
+
+
+}
+
+module.exports = {generatetoken, jsonauthmiddleware};
+

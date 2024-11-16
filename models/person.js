@@ -1,8 +1,9 @@
 const mongoose= require("mongoose");
+const {generatetoken, jsonauthmiddleware} = require('../jsonauth');
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");          
 
-const personschema= new mongoose.Schema({
+const personschema= new mongoose.Schema({         
 
     name :{
         type : String,
